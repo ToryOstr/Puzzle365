@@ -1,0 +1,41 @@
+:root {
+--fraction: 10vh;
+
+}
+
+body * {
+  box-sizing: border-box;
+}
+body{
+
+  margin: 0;
+}
+.puzzleBord {
+    border: 1px solid #333;
+}
+.game {
+  display: inline-flex;
+  width: 100%;
+  height:auto;
+  margin: auto;
+
+}
+.puzzleBord {
+  width: calc(var(--fraction)*7);
+  height:calc(var(--fraction)*7);
+}
+.row {
+  display: flex;
+  width:calc(var(--fraction)*7);
+  height:var(--fraction) ;
+  border: 1px solid blue;
+}
+.bordItem {
+  width: var(--fraction);
+  height: var(--fraction);
+  border: 1px solid green;
+}
+
+.bordItem.empty {
+  background-color: #909090;
+}
