@@ -1,6 +1,8 @@
 :root {
 --fraction: 10vh;
-
+--empty-element-color :rgb(144, 144, 144);
+--mait-text-color: rgb(18 118 18);
+--blocked-element: 5px solid rgb(160, 60, 6);
 }
 
 body * {
@@ -11,7 +13,7 @@ body{
   margin: 0;
 }
 .puzzleBord {
-    border: 1px solid #333;
+    border: 1px solid var(--empty-element-color);
 }
 .game {
   display: inline-flex;
@@ -20,22 +22,38 @@ body{
   margin: auto;
 
 }
+
 .puzzleBord {
+  box-sizing:content-box ;
   width: calc(var(--fraction)*7);
   height:calc(var(--fraction)*7);
+  margin:var(--fraction);
+  border: 20px solid var(--empty-element-color);
+  border-radius: 5px;
 }
 .row {
   display: flex;
   width:calc(var(--fraction)*7);
   height:var(--fraction) ;
-  border: 1px solid blue;
 }
 .bordItem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: var(--fraction);
   height: var(--fraction);
-  border: 1px solid green;
+  background-color: rgb(225, 253, 225);
+  border: 1px solid var(--empty-element-color);
 }
-
+.bordItem > p{
+font-size: 28px;
+font-style: italic;
+font-weight: 600;
+color: var(--mait-text-color);
+}
 .bordItem.empty {
-  background-color: #909090;
+  background-color: var(--empty-element-color);
+}
+.blocked {
+  border: var(--blocked-element);
 }
