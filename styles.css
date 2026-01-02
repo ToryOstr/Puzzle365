@@ -1,42 +1,51 @@
 :root {
---fraction: 10vh;
---empty-element-color :rgb(144, 144, 144);
---mait-text-color: rgb(18 118 18);
---blocked-element: 5px solid rgb(160, 60, 6);
+  --fraction: 10vh;
+  --empty-element-color: rgb(144, 144, 144);
+  --mait-text-color: rgb(18 118 18);
+  --blocked-element: 5px solid rgb(160, 60, 6);
 }
 
 body * {
   box-sizing: border-box;
 }
-body{
-
+body {
   margin: 0;
 }
 .puzzleBord {
-    border: 1px solid var(--empty-element-color);
+  border: 1px solid var(--empty-element-color);
 }
 .game {
+  position: relative;
   display: inline-flex;
   width: 100%;
-  height:auto;
+  height: auto;
   margin: auto;
-
+}
+.game > p {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  top: 10px;
+  left: 90px;
+  font-size: 24px;
+  font-weight: 500;
+  color: var(--mait-text-color);
 }
 
 .puzzleBord {
-  box-sizing:content-box ;
-  width: calc(var(--fraction)*7);
-  height:calc(var(--fraction)*7);
-  margin:var(--fraction);
+  box-sizing: content-box;
+  width: calc(var(--fraction) * 7);
+  height: calc(var(--fraction) * 7);
+  margin: var(--fraction);
   border: 20px solid var(--empty-element-color);
   border-radius: 5px;
 }
 .row {
   display: flex;
-  width:calc(var(--fraction)*7);
-  height:var(--fraction) ;
+  width: calc(var(--fraction) * 7);
+  height: var(--fraction);
 }
-.bordItem {
+.cell {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,15 +54,35 @@ body{
   background-color: rgb(225, 253, 225);
   border: 1px solid var(--empty-element-color);
 }
-.bordItem > p{
-font-size: 28px;
-font-style: italic;
-font-weight: 600;
-color: var(--mait-text-color);
+.cell > p {
+  font-size: 28px;
+  font-style: italic;
+  font-weight: 600;
+  color: var(--mait-text-color);
+  margin: auto;
 }
-.bordItem.empty {
+.cell.empty {
   background-color: var(--empty-element-color);
 }
-.blocked {
+.cell.blocked {
   border: var(--blocked-element);
+  background-color: rgba(255, 255, 255, 0.134);
+}
+
+.puzzleItems {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  margin: var(--fraction);
+  gap: calc(var(--fraction) / 2);
+}
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--fraction) / 3);
+  height: calc(var(--fraction) / 3);
+  background-color: rgb(225, 253, 225);
+  border: 1px solid var(--empty-element-color);
 }
