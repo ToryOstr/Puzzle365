@@ -78,10 +78,8 @@ body {
   margin-bottom: calc(var(--fraction) / 4);
 }
 .itemsContainer {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
+  display: grid;
+  grid-template: 1fr / 1fr 1fr;
   gap: calc(var(--fraction) / 2);
 }
 

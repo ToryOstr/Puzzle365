@@ -50,10 +50,30 @@ const puzzleShapes = [
   ],
 
 ];
+let figureStates = puzzleShapes.map(() => {
+  return { rotation: 0,
+  mirrored: false}
+});
 
-const itemsContainer = document.querySelector('.itemsContainer');
+function normalizeShape(shape) {
+  let minX = Math.min(...shape.map(p => p[0]));
+  let minY = Math.min(...shape.map(p => p[1]));
+  return shape.map(([x, y]) => [x - minX, y - minY]);
+};
+function rotateShape90(shape) {
+  let maxX = Math.max(...shape.map(p => p[0]));
+  let rotated = shape.map(([x, y]) => [y, maxX - x]);
+  return normalizeShape(rotated);
+};
+
+function mirrorShape(shape) {
+  let maxX = Math.max(...shape.map(p => p[0]));
+  let mirrored = shape.map(([x, y]) => [maxX - x, y]);
+  return normalizeShape(mirrored);
+};
 
 // визначаємо розмір сітки для фігури
+
 function gridSizeY(item) {
   return Math.max(...item.map(([_, y]) => y)) + 1;
 };
@@ -61,25 +81,50 @@ function gridSizeX(item) {
   return Math.max(...item.map(([x, _]) => x)) + 1;
 };
 
+const itemsContainer = document.querySelector('.itemsContainer');
+
 //cтворюємо фігуру
-function createFigure(item) {
+function createFigure(item, i) {
   let figure = '';
   item.forEach(([x, y]) => {
     figure += `<div class="cell" style="grid-area: ${x + 1} / ${y + 1}"></div>`;
   });
 
-  return `<div class="item" style="grid-template-rows: repeat(${gridSizeX(item)}, var(--fraction)); grid-template-columns: repeat(${gridSizeY(item)}, var(--fraction));">
+  return `<div id='${i}' class="item" style="grid-template-rows: repeat(${gridSizeX(item)}, var(--fraction)); grid-template-columns: repeat(${gridSizeY(item)}, var(--fraction));">
   ${figure}
 </div>`;
 
 };
 // додаємо фігури на сторінку
-puzzleShapes.forEach(shape => {
-  itemsContainer.innerHTML += createFigure(shape);
+puzzleShapes.forEach((shape,i) => {
+  itemsContainer.innerHTML += createFigure(shape, i);
 });
 
+
+//figure rotation
+
+
+
+let shapes = document.querySelectorAll('.item');
+
+shapes.forEach((shape) => {
+  shape.addEventListener('click', (e) => {
+    const currentShape = e.currentTarget;
+    let id = currentShape.id;
+    puzzleShapes[id] = rotateShape90(puzzleShapes[id]);
+    let inner = '';
+    puzzleShapes[id].forEach(([x, y]) => {
+      inner += `<div class="cell" style="grid-area: ${x + 1} / ${y + 1}"></div>`;
+    });
+    currentShape.innerHTML = inner;
+    currentShape.style.gridTemplateRows = `repeat(${gridSizeX(puzzleShapes[id])}, var(--fraction))`;
+    currentShape.style.gridTemplateColumns = `repeat(${gridSizeY(puzzleShapes[id])}, var(--fraction))`;
+
+  })
+});
+
+// знаходимо комірку, по якій клікнули
 document.addEventListener('click', (e) => {
-  // знаходимо комірку, по якій клікнули
   const cell = e.target.closest('.cell');
   if (!cell) return;
 
@@ -111,4 +156,3 @@ document.addEventListener('click', (e) => {
   // блокуємо поточну
   cell.classList.add('blocked');
 });
-
