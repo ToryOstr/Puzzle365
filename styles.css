@@ -28,7 +28,7 @@ body {
   box-sizing: content-box;
   width: calc(var(--fraction) * 7);
   height: calc(var(--fraction) * 7);
-  margin: calc(var(--fraction) / 2);
+  margin: calc(var(--fraction) / 4);
   border: 20px solid var(--empty-element-color);
   border-radius: 5px;
 }
@@ -63,11 +63,11 @@ body {
 
 .puzzleItems {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
   justify-content: flex-start;
-  margin: calc(var(--fraction) / 2);
-  gap: calc(var(--fraction) / 2);
+  max-height: calc(var(--fraction) * 7 );
+  overflow-y: scroll;
+  margin: calc(var(--fraction) / 4);
 }
 .puzzleItems p {
   width: 100%;
@@ -84,7 +84,7 @@ body {
   justify-content: center;
   gap: calc(var(--fraction) / 2);
 }
-.figure,
+
 .item {
   display: grid;
 }
