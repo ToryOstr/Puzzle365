@@ -1,8 +1,9 @@
 :root {
   --fraction: 10vh;
   --empty-element-color: rgb(144, 144, 144);
-  --mait-text-color: rgb(18 118 18);
+  --main-text-color: rgb(18 118 18);
   --blocked-element: 5px solid rgb(160, 60, 6);
+  --font-size: 24px;
 }
 
 body * {
@@ -20,23 +21,14 @@ body {
   width: 100%;
   height: auto;
   margin: auto;
-}
-.game > p {
-  position: absolute;
-  text-align: center;
-  width: auto;
-  top: 10px;
-  left: 90px;
-  font-size: 24px;
-  font-weight: 500;
-  color: var(--mait-text-color);
+  user-select: none;
 }
 
 .puzzleBord {
   box-sizing: content-box;
   width: calc(var(--fraction) * 7);
   height: calc(var(--fraction) * 7);
-  margin: var(--fraction);
+  margin: calc(var(--fraction) / 2);
   border: 20px solid var(--empty-element-color);
   border-radius: 5px;
 }
@@ -55,10 +47,10 @@ body {
   border: 1px solid var(--empty-element-color);
 }
 .cell > p {
-  font-size: 28px;
+  font-size: var(--font-size);
   font-style: italic;
   font-weight: 600;
-  color: var(--mait-text-color);
+  color: var(--main-text-color);
   margin: auto;
 }
 .cell.empty {
@@ -72,17 +64,42 @@ body {
 .puzzleItems {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  margin: var(--fraction);
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: calc(var(--fraction) / 2);
   gap: calc(var(--fraction) / 2);
 }
-.item {
+.puzzleItems p {
+  width: 100%;
+  text-align: center;
+  font-size: var(--font-size);
+  font-weight: 500;
+  color: var(--main-text-color);
+  margin-bottom: calc(var(--fraction) / 4);
+}
+.itemsContainer {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
   justify-content: center;
-  width: calc(var(--fraction) / 3);
-  height: calc(var(--fraction) / 3);
-  background-color: rgb(225, 253, 225);
-  border: 1px solid var(--empty-element-color);
+  gap: calc(var(--fraction) / 2);
+}
+.figure,
+.item {
+  display: grid;
+}
+@media (max-width: 1200px) {
+  :root {
+    --fraction: 10vw;
+    --font-size: 4vw;
+  }
+
+  .game {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+  .puzzleBord {
+    margin: auto;
+  }
 }
