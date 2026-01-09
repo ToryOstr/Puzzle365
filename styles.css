@@ -1,12 +1,14 @@
 :root {
   --fraction: 10vh;
   --empty-element-color: rgb(144, 144, 144);
-  --main-text-color: rgb(18 118 18);
+  --background-color: rgb(225, 253, 225);
+  --main-color: rgb(18, 120, 18);
   --blocked-element: 5px solid rgb(160, 60, 6);
   --font-size: 24px;
 }
 
-body * {
+body {
+  font-family: "Courier New", Courier, monospace;
   box-sizing: border-box;
 }
 body {
@@ -18,6 +20,7 @@ body {
 .game {
   position: relative;
   display: inline-flex;
+  justify-content: center;
   width: 100%;
   height: auto;
   margin: auto;
@@ -43,14 +46,15 @@ body {
   justify-content: center;
   width: var(--fraction);
   height: var(--fraction);
-  background-color: rgb(225, 253, 225);
+  background-color: var(--background-color);
   border: 1px solid var(--empty-element-color);
 }
 .cell > p {
   font-size: var(--font-size);
   font-style: italic;
   font-weight: 600;
-  color: var(--main-text-color);
+  font-family: "Courier New", Courier, monospace;
+  color: var(--main-color);
   margin: auto;
 }
 .cell.empty {
@@ -62,19 +66,53 @@ body {
 }
 
 .puzzleItems {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  max-height: calc(var(--fraction) * 7 );
+  width: 50%;
+  margin: calc(var(--fraction) / 4) 0;
+}
+.scrollContainer {
+  width: 100%;
+  max-height: calc(var(--fraction) * 7);
   overflow-y: scroll;
+}
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: calc(var(--fraction) / 4);
   margin: calc(var(--fraction) / 4);
+}
+.controls button {
+  width: var(--fraction);
+  height: var(--fraction);
+  padding: calc(var(--fraction) / 8) calc(var(--fraction) / 4);
+  border: 2px solid var(--main-color);
+  border-radius: 5px;
+
+  font-size: calc(var(--font-size) * 0.8);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--main-color);
+  background-color: var(--background-color);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.controls button img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.controls button:hover {
+  background-color: var(--main-color);
 }
 .puzzleItems p {
   width: 100%;
   text-align: center;
   font-size: var(--font-size);
   font-weight: 500;
-  color: var(--main-text-color);
+  color: var(--main-color);
   margin-bottom: calc(var(--fraction) / 4);
 }
 .itemsContainer {
@@ -86,6 +124,11 @@ body {
 .item {
   display: grid;
 }
+.item:hover {
+  cursor: grab;
+  transform: scale(1);
+}
+
 @media (max-width: 1200px) {
   :root {
     --fraction: 10vw;
@@ -98,6 +141,10 @@ body {
     flex-direction: column;
   }
   .puzzleBord {
+    margin: auto;
+  }
+  .puzzleItems {
+    width: auto;
     margin: auto;
   }
 }
