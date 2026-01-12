@@ -54,7 +54,8 @@ const puzzleShapes = [
 let figureStates = puzzleShapes.map(() => {
   return {
     rotation: 0,
-    mirrored: false
+    mirrored: false,
+    color: randomColor(),
   }
 });
 
@@ -66,10 +67,14 @@ let dragState = {
   offsetX: 0,
   offsetY: 0
 };
-const bord = document.querySelector('.puzzleBord');
+const board = document.querySelector('.puzzleBord');
 const itemsContainer = document.querySelector('.itemsContainer');
-let bordCells = bord.querySelectorAll('.cell');
+let boardCells = board.querySelectorAll('.cell');
 
+function randomColor() {
+  const hue = Math.floor(Math.random() * 360);
+  return `hsl(${hue}, 70%, 60%)`;
+};
 // визначаємо розмір сітки для фігури
 function gridSizeY(item) {
   return Math.max(...item.map(([_, y]) => y)) + 1;
@@ -85,9 +90,10 @@ function normalizeShape(shape) {
 };
 
 function createFigure(item, i) {
+  const color = figureStates[i].color;
   let figure = '';
   item.forEach(([x, y]) => {
-    figure += `<div class="cell" style="grid-area: ${y + 1} / ${x + 1}"></div>`;
+    figure += `<div class="cell" style=" background-color: ${color}; grid-area: ${y + 1} / ${x + 1}"></div>`;
   });
 
   return `<div id='${i}' class="item" style="grid-template-rows: repeat(${gridSizeX(item)}, var(--fraction)); grid-template-columns: repeat(${gridSizeY(item)}, var(--fraction));">
@@ -126,7 +132,7 @@ rotateBtn.addEventListener('click', () => {
   puzzleShapes[selectedShapeId] = rotateShape90(puzzleShapes[selectedShapeId]);
   let inner = '';
   puzzleShapes[selectedShapeId].forEach(([x, y]) => {
-    inner += `<div class="cell" style="grid-area: ${x + 1} / ${y + 1}"></div>`;
+    inner += `<div class="cell" style="background-color: ${figureStates[selectedShapeId].color}; grid-area: ${x + 1} / ${y + 1}"></div>`;
   });
   selectedShape.innerHTML = inner;
   selectedShape.style.gridTemplateRows = `repeat(${gridSizeX(puzzleShapes[selectedShapeId])}, var(--fraction))`;
@@ -140,7 +146,7 @@ mirrorBtn.addEventListener('click', () => {
   puzzleShapes[selectedShapeId] = mirrorShape(puzzleShapes[selectedShapeId]);
   let inner = '';
   puzzleShapes[selectedShapeId].forEach(([x, y]) => {
-    inner += `<div class="cell" style="grid-area: ${x + 1} / ${y + 1}"></div>`;
+    inner += `<div class="cell" style=" background-color: ${figureStates[selectedShapeId].color}; grid-area: ${x + 1} / ${y + 1}"></div>`;
   });
   selectedShape.innerHTML = inner;
   selectedShape.style.gridTemplateRows = `repeat(${gridSizeX(puzzleShapes[selectedShapeId])}, var(--fraction))`;
@@ -200,7 +206,7 @@ document.addEventListener('pointermove', e => {
 });
 function getCellUnderFigureCorner(figure) {
   const figRect = figure.getBoundingClientRect();
-  const cells = bord.querySelectorAll('.cell');
+  const cells = board.querySelectorAll('.cell');
 
   const cornerX = figRect.left;
   const cornerY = figRect.top;
@@ -245,7 +251,7 @@ document.addEventListener('pointerup', e => {
 
 
 // знаходимо комірку, по якій клікнули
-bord.addEventListener('click', (e) => {
+board.addEventListener('click', (e) => {
   const cell = e.target.closest('.cell');
   if (!cell) return;
 

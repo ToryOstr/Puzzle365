@@ -1,5 +1,5 @@
 :root {
-  --fraction: 10vh;
+  --fraction: 5vw;
   --empty-element-color: rgb(144, 144, 144);
   --background-color: rgb(225, 253, 225);
   --shapes-color: rgb(128, 195, 224);
@@ -8,16 +8,12 @@
   --selected-element: rgba(75, 114, 255, 1);
   --font-size: 24px;
 }
-
 body {
   font-family: "Courier New", Courier, monospace;
   box-sizing: border-box;
 }
 body {
   margin: 0;
-}
-.puzzleBord {
-  border: 1px solid var(--empty-element-color);
 }
 .game {
   position: relative;
@@ -31,11 +27,10 @@ body {
 
 .puzzleBord {
   position: relative;
-  box-sizing: content-box;
   width: calc(var(--fraction) * 7);
   height: calc(var(--fraction) * 7);
   margin: calc(var(--fraction) / 4);
-  border: 20px solid var(--empty-element-color);
+  border: calc(var(--fraction) / 4) solid var(--empty-element-color);
   border-radius: 5px;
 }
 .row {
@@ -81,7 +76,8 @@ body {
   position: relative;
   width: 100%;
   max-height: calc(var(--fraction) * 7);
-  overflow-y: scroll;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
 }
 .controls {
   display: flex;
@@ -122,8 +118,9 @@ body {
 }
 .itemsContainer {
   display: grid;
-  grid-template: 1fr / 1fr 1fr;
-  gap: calc(var(--fraction) / 2);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: calc(var(--fraction) / 4);
+  row-gap: calc(var(--fraction) / 4);
   overflow: visible;
 }
 
@@ -131,14 +128,12 @@ body {
   display: grid;
   touch-action: none;
 }
-.item .cell {
-  background-color: var(--shapes-color);
-}
+
 .item:hover {
   cursor: pointer;
 }
 .selected .cell{
-  background-color: var(--selected-element);
+  filter: brightness(75%);
 }
 .item.dragging {
   z-index: 50;
